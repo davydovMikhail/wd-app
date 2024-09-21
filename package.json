@@ -1,5 +1,5 @@
 {
-  "homepage": "https://davydovmikhail.github.io/wd-app",
+  "homepage": "https://walletdiscover.pro/",
   "name": "brute-demo",
   "version": "0.1.0",
   "private": true,
@@ -9,6 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@typechain/ethers-v5": "^10.2.0",
+    "@types/await-timeout": "^0.3.3",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.39",
     "@types/react": "^18.2.17",
@@ -16,6 +17,7 @@
     "@types/react-dom": "^18.2.7",
     "@types/react-redux": "^7.1.25",
     "@usedapp/core": "^1.2.10",
+    "await-timeout": "^1.1.1",
     "axios": "^1.3.4",
     "bignumber.js": "^9.1.1",
     "ethers": "^5.7.2",
